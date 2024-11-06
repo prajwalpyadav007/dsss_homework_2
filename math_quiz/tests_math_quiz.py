@@ -1,30 +1,39 @@
 import unittest
-from math_quiz import function_A, function_B, function_C
+from math_quiz import generate_integers, generate_operator, generate_problem
 
 
 class TestMathGame(unittest.TestCase):
 
-    def test_function_A(self):
-        # Test if random numbers generated are within the specified range
-        min_val = 1
-        max_val = 10
-        for _ in range(1000):  # Test a large number of random values
-            rand_num = function_A(min_val, max_val)
-            self.assertTrue(min_val <= rand_num <= max_val)
+    def test_generate_integers(self):
+        # Test specified boundary conditions within a specified range
+        for _ in range(100): 
+            result= generate_integers(1,10)
+            self.assertGreaterEqual(result, 1)
+            self.assertLessEqual(result,10)
 
-    def test_function_B(self):
-        # TODO
-        pass
+    def test_generate_operator(self):
+        #check the operator is within the specified choices
+        operators={'+','-','*'}
+        for _ in range(50):
+            result=generate_operator()
+            self.assertIn(result,operators)
+        
 
-    def test_function_C(self):
-            test_cases = [
-                (5, 2, '+', '5 + 2', 7),
-                ''' TODO add more test cases here '''
-            ]
+    def test_generate_problem(self):
+        #test addition
+        problem, answer = generate_problem(3,4,'+')
+        self.assertEqual(problem,"3 + 4")
+        self.assertEqual(answer, 7)
 
-            for num1, num2, operator, expected_problem, expected_answer in test_cases:
-                # TODO
-                pass
+        #test subtarction
+        problem, answer = generate_problem(10,4,'-')
+        self.assertEqual(problem,"10 - 4")
+        self.assertEqual(answer, 6) 
+
+        #test multiplication
+        problem, answer = generate_problem(2,5,'*')
+        self.assertEqual(problem,"2 * 5")
+        self.assertEqual(answer, 10)         
 
 if __name__ == "__main__":
     unittest.main()
